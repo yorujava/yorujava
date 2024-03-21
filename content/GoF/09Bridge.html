@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex" />
+    <title>YoruJavaTM</title>
+    <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+    <header id="header">
+
+        <a href="../../index.html" class="h1">
+            <h1>YoruJavaTM</h1>トップページへ
+        </a>
+    </header>
+    <section class="content">
+        <h2>Bridge</h2>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+        <article class="content">
+            <div class="content">
+                <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+                <p class="content">
+                    Bridge（橋渡し）は、GoF（Gang of Four）のデザインパターンの一つで、機能のクラス階層と実装のクラス階層を分離し、それらを橋渡しする手法です。
+                    Bridgeパターンは、以下の目的で使用されます:
+                </p><p class="content">
+                    拡張と実装の階層分離: 機能を抽象化したクラス（Abstraction）とその実装を提供するクラス（Implementor）を分離します。<br>
+                    クラスの独立性と柔軟性: 機能のクラス階層と実装のクラス階層が独立して変化できるようにします。<br>
+                    具体的な使用ケースとして、以下のような場面でBridgeパターンを活用できます:
+                </p><p class="content">
+                    GUIライブラリ: ウィジェット（ボタン、テキストボックスなど）の機能と実装を分離する。<br>
+                    データベースアクセス: データベース接続の抽象化と具体的な実装を分離する。<br>
+                    以下は、JavaでBridgeパターンを実装する具体的な例とコードです
+                </p>
+                <p>
+                    <textarea class="code" wrap="off">
+    // Implementor（実装者）の役
+    abstract class DisplayImpl {
+        abstract void rawOpen();
+        abstract void rawPrint();
+        abstract void rawClose();
+    }
+                        
+    // ConcreteImplementor（具体的な実装者）の役
+    class StringDisplayImpl extends DisplayImpl {
+        private String string;
+                        
+        StringDisplayImpl(String string) {
+            this.string = string;
+        }
+                        
+        @Override
+        void rawOpen() {
+            System.out.println("+" + repeat("-", string.length()) + "+");
+        }
+                        
+        @Override
+        void rawPrint() {
+            System.out.println("|" + string + "|");
+        }
+                        
+        @Override
+        void rawClose() {
+            System.out.println("+" + repeat("-", string.length()) + "+");
+        }
+                        
+        private String repeat(String s, int times) {
+            return new String(new char[times]).replace("\0", s);
+        }
+    }
+                        
+    // Abstraction（抽象化）の役
+    class Display {
+        private DisplayImpl impl;
+                        
+        Display(DisplayImpl impl) {
+            this.impl = impl;
+        }
+                        
+        void open() {
+            impl.rawOpen();
+        }
+                        
+        void print() {
+            impl.rawPrint();
+        }
+                        
+        void close() {
+            impl.rawClose();
+        }
+                        
+        void display() {
+            open();
+            print();
+            close();
+        }
+    }
+                        
+    // Mainクラスでの使用例
+    public class Main {
+        public static void main(String[] args) {
+            Display d1 = new Display(new StringDisplayImpl("Hello, Japan!"));
+            Display d2 = new Display(new StringDisplayImpl("Hello, World!"));
+                        
+            d1.display();
+            d2.display();
+        }
+    }
+    </textarea>
+                </p>
+                <p class="content">
+                    この例では、DisplayクラスがAbstraction（抽象化）を担当し、StringDisplayImplクラスがConcreteImplementor（具体的な実装者）を担当しています。Bridgeパターンを使うことで、機能と実装を独立させ、柔軟な設計を実現できます
+                </p>
+
+
+            </div>
+        </article>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+    </section>
+
+    <div id="video-area">
+        <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+            <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+            <source src="../../file/Brilliant.mp4" type="video/mp4">
+            <p>動画を再生できる環境ではありません。</p>
+        </video>
+        <!--/video-area-->
+    </div>
+
+    <footer>
+        <hr>
+        <nav>
+            <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+            <span>Present by perverted gentleman TM</span>
+            <span>2024</span>
+            <a href="#">上へ</a>
+        </nav>
+    </footer>
+
+</body>
+
+</html>

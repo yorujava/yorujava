@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex" />
+  <title>YoruJavaTM</title>
+  <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+  <header id="header">
+
+    <a href="../../index.html" class="h1">
+      <h1>YoruJavaTM</h1>トップページへ
+    </a>
+  </header>
+  <section class="content">
+    <h2>Singleton</h2>
+    <a href="../designPattern.html" class="top">▲一覧へ</a>
+    <article class="content">
+      <div class="content">
+        <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+        <p class="content">
+            Singleton（シングルトン）は、GoF（Gang of Four）のデザインパターンの一つで、クラスのインスタンスを一つだけ作成し、各クラスで共有したい場合に使用されます。Singletonパターンの主な目的は、以下の点を保証することです:
+        </p><p class="content">
+            システムの起動から終了まで、そのクラスのオブジェクトが一つしか存在しないこと。<br>
+            マルチスレッドのプログラムでも、唯一のインスタンスを持つスレッドを判定できるため、同時アクセスの問題を回避できます。<br>
+            以下は、JavaでSingletonパターンを実装する具体的な例とコードです
+    </p><p>
+        <textarea class="code40" wrap="off">
+            // Singletonクラス
+            public class Singleton {
+                private static Singleton instance;
+            
+                // コンストラクタをprivateにして外部からのインスタンス生成を防ぐ
+                private Singleton() {
+                    System.out.println("Singleton instance created.");
+                }
+            
+                // 唯一のインスタンスを取得するメソッド
+                public static Singleton getInstance() {
+                    if (instance == null) {
+                        instance = new Singleton();
+                    }
+                    return instance;
+                }
+            
+                public void showMessage() {
+                    System.out.println("Hello from Singleton!");
+                }
+            }
+            
+            // Mainクラスでの使用例
+            public class Main {
+                public static void main(String[] args) {
+                    // Singletonインスタンスを取得
+                    Singleton singleton1 = Singleton.getInstance();
+                    singleton1.showMessage();
+            
+                    // 同じインスタンスを再度取得
+                    Singleton singleton2 = Singleton.getInstance();
+                    singleton2.showMessage();
+            
+                    // 二つのインスタンスは同じもの
+                    System.out.println("Are both instances the same? " 
+                                        + (singleton1 == singleton2));
+                }
+            }
+    </textarea></p><p class="content">
+        この例では、Singletonクラスが唯一のインスタンスを保証し、同じインスタンスを複数回取得していることが確認できます。 Singletonパターンを使うことで、オブジェクトの一意性と共有性を確保できます
+        </p>
+
+
+      </div>
+    </article>
+    <a href="../designPattern.html" class="top">▲一覧へ</a>
+  </section>
+
+  <div id="video-area">
+    <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+      <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+      <source src="../../file/Brilliant.mp4" type="video/mp4">
+      <p>動画を再生できる環境ではありません。</p>
+    </video>
+    <!--/video-area-->
+  </div>
+
+  <footer>
+    <hr>
+    <nav>
+      <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+      <span>Present by perverted gentleman TM</span>
+      <span>2024</span>
+      <a href="#">上へ</a>
+    </nav>
+  </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex" />
+  <title>YoruJavaTM</title>
+  <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+  <header id="header">
+
+    <a href="../../index.html" class="h1">
+      <h1>YoruJavaTM</h1>トップページへ
+    </a>
+  </header>
+  <section class="content">
+    <h2>Adapter</h2>
+    <a href="../designPattern.html" class="top">▲一覧へ</a>
+    <article class="content">
+      <div class="content">
+        <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+        <p class="content">
+            **Adapter（アダプター）**は、GoF（Gang of Four）のデザインパターンの一つで、異なるインターフェースを持つクラス同士を連携させるために使用されます。具体的には、以下のような場合にAdapterパターンを活用します
+        </p><p class="content">
+            既存のクラスを利用したいが、そのクラスの設計が必要なクラスと合致しない場合。
+            互換性のないインターフェースを持つクラス同士を連携させたい場合。
+            Adapterパターンは、クラスアダプターとオブジェクトアダプターの2つのバリエーションがあります。以下にJavaでAdapterパターンを実装する具体的な例とコードを示します。
+        </p><p class="content">
+            まず、Adapterパターンのクラス図は以下の通りです
+        </p><p class="content">
+            !Adapterパターンのクラス図
+        </p><p class="content">
+            Target（ターゲット）：クライアントが利用するドメイン固有の設計を定義します。<br>
+            Client（クライアント）：Targetの設計に合わせたオブジェクトとやり取りします。<br>
+            Adaptee（アダプティー）：合わせる必要のある既存の設計を定義します。<br>
+            Adapter（アダプター）：Adapteeの設計をTargetの設計に合わせます。<br>
+            以下は、JavaでAdapterパターンを使用した具体的な例とコードです
+    </p><p>
+        <textarea class="code40" wrap="off">
+            // Target: FileIoインタフェース
+            interface FileIo {
+                void readFromFile(String filename);
+                void writeToFile(String filename);
+            }
+            
+            // Adaptee: java.util.Propertiesクラス
+            class FileProperties {
+                // 既存の設計に合わせて実装
+                // ...
+            }
+            
+            // Adapter: FilePropertiesクラスをFileIoインタフェースに適合させる
+            class FilePropertiesAdapter implements FileIo {
+                private FileProperties fileProperties;
+            
+                public FilePropertiesAdapter(FileProperties fileProperties) {
+                    this.fileProperties = fileProperties;
+                }
+            
+                public void readFromFile(String filename) {
+                    // 実装
+                    // ...
+                }
+            
+                public void writeToFile(String filename) {
+                    // 実装
+                    // ...
+                }
+            }
+            
+            // クライアントの利用例
+            public class Main {
+                public static void main(String[] args) {
+                    FileProperties adaptee = new FileProperties();
+                    FileIo adapter = new FilePropertiesAdapter(adaptee);
+            
+                    adapter.readFromFile("sample.txt");
+                    adapter.writeToFile("output.txt");
+                }
+            }
+    </textarea></p><p class="content">
+        この例では、FilePropertiesクラスを既存の設計として、FileIoインタフェースに適合させるためにFilePropertiesAdapterクラスを作成しています。Adapterパターンを使用することで、異なるインターフェースを持つクラス同士を連携させることができます
+        </p>
+
+
+      </div>
+    </article>
+    <a href="../designPattern.html" class="top">▲一覧へ</a>
+  </section>
+
+  <div id="video-area">
+    <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+      <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+      <source src="../../file/Brilliant.mp4" type="video/mp4">
+      <p>動画を再生できる環境ではありません。</p>
+    </video>
+    <!--/video-area-->
+  </div>
+
+  <footer>
+    <hr>
+    <nav>
+      <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+      <span>Present by perverted gentleman TM</span>
+      <span>2024</span>
+      <a href="#">上へ</a>
+    </nav>
+  </footer>
+
+</body>
+
+</html>

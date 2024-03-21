@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex" />
+  <title>YoruJavaTM</title>
+  <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+  <header id="header">
+
+    <a href="../../index.html" class="h1">
+      <h1>YoruJavaTM</h1>トップページへ
+    </a>
+  </header>
+  <section class="content">
+    <h2>Iterator</h2>
+    <a href="../designPattern.html" class="top">▲一覧へ</a>
+    <article class="content">
+      <div class="content">
+        <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+        <p class="content">
+        Iteratorは、GoF（Gang of Four）のデザインパターンの一つで、オブジェクトの集合を反復処理するための手段を提供します。具体的には、以下のような場合にIteratorパターンを使用します
+    </p><p class="content">
+        アプリケーション固有なデータや構造を持つオブジェクトにアクセスする場合。
+        配列やコレクションなどの集合要素にアクセスする場合（配列はforループで回せますが、リストなどのコレクションは難しい場合があります）。
+        集合の要素に順次アクセスする必要がある場合。
+        具体的な例として、JavaでIteratorパターンを実装する方法を示します。
+    </p><p class="content">
+        まず、Iteratorパターンのクラス図は以下の通りです
+    </p><p class="content">
+        !Iteratorパターンのクラス図
+    </p><p class="content">
+        ConcreteAggregateクラス: このクラスは要素にアクセスする役割を果たします。例えば、本棚（BookShelf）が該当します。
+        ConcreteIteratorクラス: このクラスはIteratorインターフェースの実装であり、next()メソッドとhasNext()メソッドを提供します。
+        以下は、JavaでIteratorパターンを使用した具体的な例とコードです
+    </p><p>
+        <textarea class="code" wrap="off">
+        // 抽象クラス: Aggregate
+        public interface Aggregate {
+            Iterator iterator();
+        }
+        
+        // インターフェース: Iterator
+        public interface Iterator {
+            boolean hasNext();
+            Object next();
+        }
+        
+        // 具象クラス: 本棚（BookShelf）
+        public class BookShelf implements Aggregate {
+            private Book[] books;
+            private int last = 0;
+        
+            public BookShelf(int maxsize) {
+                this.books = new Book[maxsize];
+            }
+        
+            public void appendBook(Book book) {
+                this.books[last] = book;
+                last++;
+            }
+        
+            public Iterator iterator() {
+                return new BookShelfIterator(this);
+            }
+        }
+        
+        // 本のクラス
+        public class Book {
+            private String name;
+        
+            public Book(String name) {
+                this.name = name;
+            }
+        
+            public String getName() {
+                return name;
+            }
+        }
+        
+        // 本棚の要素にアクセスするクラス
+        public class BookShelfIterator implements Iterator {
+            private BookShelf bookShelf;
+            private int index;
+        
+            public BookShelfIterator(BookShelf bookShelf) {
+                this.bookShelf = bookShelf;
+                this.index = 0;
+            }
+        
+            public boolean hasNext() {
+                return index < bookShelf.getLength();
+            }
+        
+            public Object next() {
+                Book book = bookShelf.getBookAt(index);
+                index++;
+                return book;
+            }
+        }
+        
+        // Mainクラスでの使用例
+        public class Main {
+            public static void main(String[] args) {
+                BookShelf bookShelf = new BookShelf(4);
+                bookShelf.appendBook(new Book("Git Hub"));
+                bookShelf.appendBook(new Book("Qiita"));
+                bookShelf.appendBook(new Book("Java"));
+                bookShelf.appendBook(new Book("Iterator pattern"));
+        
+                Iterator iterator = bookShelf.iterator();
+                while (iterator.hasNext()) {
+                    Book book = (Book) iterator.next();
+                    System.out.println(book.getName());
+                }
+            }
+        }
+    </textarea></p><p class="content">
+        この例では、BookShelfクラスが本の集合を管理し、BookShelfIteratorクラスが要素にアクセスする役割を果たしています。Iteratorパターンを使用することで、要素の列挙が簡潔に行えます。
+        
+        </p>
+
+
+      </div>
+    </article>
+    <a href="../designPattern.html" class="top">▲一覧へ</a>
+  </section>
+
+  <div id="video-area">
+    <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+      <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+      <source src="../../file/Brilliant.mp4" type="video/mp4">
+      <p>動画を再生できる環境ではありません。</p>
+    </video>
+    <!--/video-area-->
+  </div>
+
+  <footer>
+    <hr>
+    <nav>
+      <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+      <span>Present by perverted gentleman TM</span>
+      <span>2024</span>
+      <a href="#">上へ</a>
+    </nav>
+  </footer>
+
+</body>
+
+</html>

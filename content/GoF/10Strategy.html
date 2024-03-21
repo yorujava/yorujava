@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex" />
+    <title>YoruJavaTM</title>
+    <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+    <header id="header">
+
+        <a href="../../index.html" class="h1">
+            <h1>YoruJavaTM</h1>トップページへ
+        </a>
+    </header>
+    <section class="content">
+        <h2>Strategy</h2>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+        <article class="content">
+            <div class="content">
+                <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+                <p class="content">
+                    Strategy（ストラテジー）は、GoF（Gang of Four）のデザインパターンの一つで、振る舞い（アルゴリズム）をクラス単位で定義することで、切り替えや拡張を容易にする方法です。
+                    Strategyパターンは、以下の目的で使用されます:
+                </p><p class="content">
+                    プログラムの実行中に処理を動的に切り替えるための設計。
+                    クライアント側がアルゴリズムを簡単に切り替えられるため、柔軟性を提供。
+                    具体的な使用ケースとして、以下のような場面でStrategyパターンを活用できます:
+                </p><p class="content">
+                    ゲームの難易度を変更する場合。
+                    性別によって処理を変えたい場合。
+                    以下は、JavaでStrategyパターンを実装する具体的な例とコードです
+                </p>
+                <p>
+                    <textarea class="code" wrap="off">
+// Strategyインターフェース
+interface BaseStrategy {
+    int scoringTest(int point);
+}
+
+// 各大学の評価方法を実装
+class EasyUniversityStrategy implements BaseStrategy {
+    public int scoringTest(int point) {
+        if (point >= 80) {
+            return 1; // 良い評価
+        } else if (point >= 60) {
+            return 0; // 普通の評価
+        } else {
+            return -1; // 悪い評価
+        }
+    }
+}
+
+class UsualUniversityStrategy implements BaseStrategy {
+    public int scoringTest(int point) {
+        if (point >= 85) {
+            return 1;
+        } else if (point >= 70) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+}
+
+class HardUniversityStrategy implements BaseStrategy {
+    public int scoringTest(int point) {
+        if (point >= 95) {
+            return 1;
+        } else if (point >= 80) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+}
+
+// Contextクラス
+class SampleClass {
+    private BaseStrategy currentStrategy;
+
+    public SampleClass(BaseStrategy firstStrategy) {
+        this.currentStrategy = firstStrategy;
+    }
+
+    public void changeStrategy(BaseStrategy newStrategy) {
+        this.currentStrategy = newStrategy;
+    }
+
+    public void getOpinion(Map<String, Integer> pointMap) {
+        for (String name : pointMap.keySet()) {
+            int result = currentStrategy.scoringTest(pointMap.get(name));
+            if (result > 0) {
+                System.out.println(name + "さん：良い評価です");
+            } else if (result == 0) {
+                System.out.println(name + "さん：普通の評価です");
+            } else {
+                System.out.println(name + "さん：悪い評価です");
+            }
+        }
+    }
+}
+
+// 使用例
+public class Main {
+    public static void main(String[] args) {
+        Map<String, Integer> pointMap = new HashMap<>();
+        pointMap.put("鈴本賢太", 90);
+        pointMap.put("吉村彩", 80);
+        pointMap.put("福永尚也", 70);
+        pointMap.put("増岡麻衣", 60);
+
+        SampleClass sample = new SampleClass(new EasyUniversityStrategy());
+        sample.getOpinion(pointMap);
+
+        sample.changeStrategy(new UsualUniversityStrategy());
+        sample.getOpinion(pointMap);
+
+        sample.changeStrategy(new HardUniversityStrategy());
+        sample.getOpinion(pointMap);
+    }
+}
+    </textarea>
+                </p>
+                <p class="content">
+                    この例では、大学の入試試験の点数から各大学の入学評価を判定する処理をStrategyパターンで実装しています。Strategyパターンを使うことで、クライアント側がアルゴリズムを柔軟に切り替えられるメリットがあります
+                </p>
+
+
+            </div>
+        </article>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+    </section>
+
+    <div id="video-area">
+        <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+            <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+            <source src="../../file/Brilliant.mp4" type="video/mp4">
+            <p>動画を再生できる環境ではありません。</p>
+        </video>
+        <!--/video-area-->
+    </div>
+
+    <footer>
+        <hr>
+        <nav>
+            <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+            <span>Present by perverted gentleman TM</span>
+            <span>2024</span>
+            <a href="#">上へ</a>
+        </nav>
+    </footer>
+
+</body>
+
+</html>

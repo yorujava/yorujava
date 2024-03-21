@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex" />
+    <title>YoruJavaTM</title>
+    <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+    <header id="header">
+
+        <a href="../../index.html" class="h1">
+            <h1>YoruJavaTM</h1>トップページへ
+        </a>
+    </header>
+    <section class="content">
+        <!--◆◆◆◆◆◆◆◆デザインパターン名◆◆◆◆◆◆◆◆◆-->
+        <h2>Mediator</h2>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+        <article class="content">
+            <div class="content">
+                <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆前説明◆◆◆◆◆◆◆◆◆-->
+                    Mediatorパターンは、GoF（Gang of
+                    Four）によって定義されたデザインパターンの一つで、複雑に絡み合ったオブジェクト間の関係を**Mediator（調停者）**が整理するパターンです。
+                </p><p class="content">
+                    このパターンを適用することで、オブジェクト同士が直接連携することなく、調停者を通じて連携を行います。例えば、10個のオブジェクト間で連携を取る必要がある場合、オブジェクト同士で直接連携を取ると、90通りの調整処理が必要になります。しかし、調停者を介して調整することで、10通りの調整処理で済みます。
+                </p><p class="content">
+                    以下に、Javaでの具体的なMediatorパターンの例とコードを示します。
+                </p><p class="content">
+                    具体例<br>
+                    考えてみましょう。ある資源に対して作用するプロセスやボタンが多い場合、Mediatorパターンは効果を発揮します。以下は、Mediatorパターンを使ったシンプルな例です。
+                </p>
+                <p>
+                    <!--◆◆◆◆◆◆◆◆コード◆◆◆◆◆◆◆◆◆-->
+                    <textarea class="code60" wrap="off">
+//Mediatorクラス
+//Java
+
+abstract class Mediator {
+    public abstract void setColleague(Colleague colleague);
+    public abstract boolean isDoneConsultation();
+}
+
+class ConcreteMediatorA extends Mediator {
+    private Colleague doneColleague = null;
+
+    public void setColleague(Colleague colleague) {
+        if (doneColleague == null) {
+            doneColleague = colleague;
+            System.out.println(this.getName() + "の実施ありがとう、" 
+                        + colleague.getName() + "さん。");
+        } else {
+            System.out.println(colleague.getName() + "さん、残念ですが" 
+                        + this.getName() + "はもう実施済みなんですよね…。");
+        }
+    }
+
+    public boolean isDoneConsultation() {
+        if (doneColleague == null) {
+            System.out.println("まだ" + this.getName() + "は実施されていません。");
+            return false;
+        } else {
+            System.out.println(this.getName() + "はもう" + doneColleague.getName() 
+                        + "さんが実施しました。");
+            return true;
+        }
+    }
+}
+
+class ConcreteMediatorB extends Mediator {
+    // 同様に実装...
+}
+
+// 他のMediatorクラスも同様に実装...
+
+//Colleagueクラス
+//Java
+
+abstract class Colleague {
+    // 同様に実装...
+}
+
+class ConcreteColleagueA extends Colleague {
+    // 同様に実装...
+}
+
+class ConcreteColleagueB extends Colleague {
+    // 同様に実装...
+}
+
+// 他のColleagueクラスも同様に実装...
+    </textarea>
+                </p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆締め◆◆◆◆◆◆◆◆◆-->
+                    この例では、複雑なオブジェクト間の連携をMediatorパターンで整理しています。各Colleague（作業者）はMediatorを介して連携を行い、調整処理を簡潔に実現しています。
+
+                </p>
+            </div>
+        </article>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+    </section>
+
+    <div id="video-area">
+        <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+            <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+            <source src="../../file/Brilliant.mp4" type="video/mp4">
+            <p>動画を再生できる環境ではありません。</p>
+        </video>
+        <!--/video-area-->
+    </div>
+
+    <footer>
+        <hr>
+        <nav>
+            <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+            <span>Present by perverted gentleman TM</span>
+            <span>2024</span>
+            <a href="#">上へ</a>
+        </nav>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex" />
+    <title>YoruJavaTM</title>
+    <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+    <header id="header">
+
+        <a href="../../index.html" class="h1">
+            <h1>YoruJavaTM</h1>トップページへ
+        </a>
+    </header>
+    <section class="content">
+        <h2>Composite</h2>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+        <article class="content">
+            <div class="content">
+                <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+                <p class="content">
+                    Composite（コンポジット）は、GoF（Gang of Four;
+                    4人のギャングたち）によって定義されたデザインパターンの1つで、構造に関するパターンに属します。このパターンは、木構造を伴う再帰的なデータ構造を表現するために使用されます。具体的には、ディレクトリとファイルのような階層的な構造を同一視できるようにします。
+                </p><p class="content">
+                    Compositeパターンでは、次の2つの役割が登場します：
+                </p><p class="content">
+                    Leaf（葉）：中身を表す役割で、他のものを入れることはできません。例えば、ファイルがLeaf役を担います。<br>
+                    Composite（複合体）：容器を表す役割で、Leaf役や他のComposite役を入れることができます。例えば、ディレクトリがComposite役を担います。<br>
+                    これにより、ユーザーはノードのタイプ（コンポジットまたはリーフ）を意識せずに、同じように操作できる利点があります。
+
+                    以下は、JavaでCompositeパターンを実装したサンプルコードです
+                </p>
+                <p>
+                    <textarea class="code100" wrap="off">
+import java.util.ArrayList;
+import java.util.List;
+
+// Componentの役
+interface Entry {
+    String getName();
+    int getSize();
+    void add(Entry entry);
+    void printList();
+}
+
+// Leafの役
+class File implements Entry {
+    private String name;
+    private int size;
+
+    public File(String name, int size) {
+        this.name = name;
+        this.size = size;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void add(Entry entry) {
+        throw new UnsupportedOperationException("FileTreatmentException");
+    }
+
+    public void printList() {
+        System.out.println(name + " (" + size + ")");
+    }
+}
+
+// Compositeの役
+class Directory implements Entry {
+    private String name;
+    private List<Entry> directory;
+
+    public Directory(String name) {
+        this.name = name;
+        this.directory = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getSize() {
+        int size = 0;
+        for (Entry d : directory) {
+            size += d.getSize();
+        }
+        return size;
+    }
+
+    public void add(Entry entry) {
+        entry.path = name;
+        directory.add(entry);
+    }
+
+    public void printList() {
+        System.out.println(name);
+        for (Entry e : directory) {
+            e.printList();
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Directory root = new Directory("root");
+        root.add(new File("vi", 10000));
+        root.add(new File("latex", 20000));
+
+        Directory tmp = new Directory("tmp");
+        root.add(tmp);
+        tmp.add(new File("diary.html", 100));
+        tmp.add(new File("Composite.java", 200));
+
+        Directory usr = new Directory("usr");
+        root.add(usr);
+
+        Directory yuki = new Directory("yuki");
+        usr.add(yuki);
+        yuki.add(new File("memo.tex", 300));
+
+        Directory hanako = new Directory("hanako");
+        usr.add(hanako);
+        hanako.add(new File("game.doc", 400));
+        hanako.add(new File("junk.mail", 500));
+
+        root.printList();
+    }
+}
+    </textarea>
+                </p>
+                <p class="content">
+                    このサンプルコードでは、ファイルとディレクトリを同じように扱えることが確認できます。Compositeパターンは、ファイルシステムなどで再帰的な構造を扱う際に役立ちます。
+                </p>
+
+
+            </div>
+        </article>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+    </section>
+
+    <div id="video-area">
+        <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+            <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+            <source src="../../file/Brilliant.mp4" type="video/mp4">
+            <p>動画を再生できる環境ではありません。</p>
+        </video>
+        <!--/video-area-->
+    </div>
+
+    <footer>
+        <hr>
+        <nav>
+            <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+            <span>Present by perverted gentleman TM</span>
+            <span>2024</span>
+            <a href="#">上へ</a>
+        </nav>
+    </footer>
+
+</body>
+
+</html>

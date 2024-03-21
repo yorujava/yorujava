@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex" />
+    <title>YoruJavaTM</title>
+    <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+    <header id="header">
+
+        <a href="../../index.html" class="h1">
+            <h1>YoruJavaTM</h1>トップページへ
+        </a>
+    </header>
+    <section class="content">
+        <!--◆◆◆◆◆◆◆◆デザインパターン名◆◆◆◆◆◆◆◆◆-->
+        <h2>Memento</h2>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+        <article class="content">
+            <div class="content">
+                <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆前説明◆◆◆◆◆◆◆◆◆-->
+                    Mementoパターンは、GoF（Gang of Four）によって定義されたデザインパターンの一つで、オブジェクトの内部状態をキャプチャし、後にその状態に戻すことを可能にします。
+                </p><p class="content">
+                    以下に、Mementoパターンの概要とJavaでの具体的な例とコードを示します。
+                </p><p class="content">
+                    Mementoパターンの概要<br>
+                    Mementoパターンは、オブジェクトの状態を保存しておき、後でその状態に戻すための方法を提供します。
+                    主に「アンドゥ（元に戻す）」機能を実現するために使用されます。
+                    オブジェクトの内部状態を外部から直接アクセスせずに、中間的なオブジェクト（Memento）を介して操作します。<br>
+                    具体例<br>
+                    以下は、Mementoパターンを用いた具体的なJavaの例です。
+                </p>
+                <p>
+                    <!--◆◆◆◆◆◆◆◆コード◆◆◆◆◆◆◆◆◆-->
+                    <textarea class="code70" wrap="off">
+//Mementoクラス
+//Java
+
+class Memento {
+    private final String state;
+
+    public Memento(String state) {
+        this.state = state;
+    }
+
+    public String getState() {
+        return state;
+    }
+}
+
+//Originatorクラス
+//Java
+
+class Originator {
+    private String state;
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public Memento saveStateToMemento() {
+        return new Memento(state);
+    }
+
+    public void restoreStateFromMemento(Memento memento) {
+        state = memento.getState();
+    }
+}
+
+//Caretakerクラス
+//Java
+
+class Caretaker {
+    private Memento memento;
+
+    public void saveMemento(Memento memento) {
+        this.memento = memento;
+    }
+
+    public Memento getMemento() {
+        return memento;
+    }
+}
+
+//メインクラス
+//Java
+
+public class Main {
+    public static void main(String[] args) {
+        Originator originator = new Originator();
+        Caretaker caretaker = new Caretaker();
+
+        originator.setState("初期状態");
+        System.out.println("現在の状態: " + originator.getState());
+
+        // 状態を保存
+        caretaker.saveMemento(originator.saveStateToMemento());
+
+        // 状態を変更
+        originator.setState("新しい状態");
+        System.out.println("現在の状態: " + originator.getState());
+
+        // 状態を復元
+        originator.restoreStateFromMemento(caretaker.getMemento());
+        System.out.println("復元後の状態: " + originator.getState());
+    }
+}
+    </textarea>
+                </p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆締め◆◆◆◆◆◆◆◆◆-->
+                    この例では、Originatorが状態を保持し、Caretakerが状態を保存・復元する役割を果たしています。Mementoパターンを使うことで、オブジェクトの状態を適切に管理できます。
+
+                </p>
+            </div>
+        </article>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+    </section>
+
+    <div id="video-area">
+        <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+            <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+            <source src="../../file/Brilliant.mp4" type="video/mp4">
+            <p>動画を再生できる環境ではありません。</p>
+        </video>
+        <!--/video-area-->
+    </div>
+
+    <footer>
+        <hr>
+        <nav>
+            <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+            <span>Present by perverted gentleman TM</span>
+            <span>2024</span>
+            <a href="#">上へ</a>
+        </nav>
+    </footer>
+
+</body>
+
+</html>

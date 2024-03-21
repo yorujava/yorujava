@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex" />
+  <title>YoruJavaTM</title>
+  <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+  <header id="header">
+
+    <a href="../../index.html" class="h1">
+      <h1>YoruJavaTM</h1>トップページへ
+    </a>
+  </header>
+  <section class="content">
+    <h2>Prototype</h2>
+    <a href="../designPattern.html" class="top">▲一覧へ</a>
+    <article class="content">
+      <div class="content">
+        <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+        <p class="content">
+            Prototype（プロトタイプ）は、GoF（Gang of Four）のデザインパターンの一つで、既存のインスタンスをコピーして新しいインスタンスを生成する手法です。このパターンは、以下の目的で使用されます:
+        </p><p class="content">
+            インスタンスの生成を効率化するため。<br>
+            クラスの再利用性を高めるため。<br>
+            具体的な使用ケースとして、以下のような場面でPrototypeパターンを活用できます:
+        </p><p class="content">
+            大量の類似オブジェクトを生成する必要がある場合。<br>
+            インスタンス生成のコストが高い場合（例: データベース接続やネットワーク通信）。<br>
+            以下は、JavaでPrototypeパターンを実装する具体的な例とコードです
+    </p><p>
+        <textarea class="code50" wrap="off">
+  // 抽象クラス: Prototype
+  abstract class Prototype implements Cloneable {
+      abstract Prototype clone();
+  }
+         
+  // 具象クラス: ConcretePrototype
+  class ConcretePrototype extends Prototype {
+      private String data;
+          
+      ConcretePrototype(String data) {
+          this.data = data;
+      }
+            
+      @Override
+      Prototype clone() {
+          return new ConcretePrototype(this.data);
+      }
+            
+      void setData(String data) {
+          this.data = data;
+      }
+           
+      String getData() {
+          return data;
+      }
+  }
+            
+  // Mainクラスでの使用例
+  public class Main {
+      public static void main(String[] args) {
+          ConcretePrototype original = new ConcretePrototype("Original Data");
+           
+          // オリジナルからクローンを作成
+          ConcretePrototype clone1 = (ConcretePrototype) original.clone();
+          clone1.setData("Modified Data 1");
+          
+          // 別のクローンを作成
+          ConcretePrototype clone2 = (ConcretePrototype) original.clone();
+          clone2.setData("Modified Data 2");
+           
+          System.out.println("Original Data: " + original.getData());
+          System.out.println("Clone 1 Data: " + clone1.getData());
+          System.out.println("Clone 2 Data: " + clone2.getData());
+      }
+  }
+    </textarea></p><p class="content">
+        この例では、ConcretePrototypeクラスがPrototypeを継承しており、clone()メソッドで新しいインスタンスを生成しています。Prototypeパターンを使うことで、インスタンス生成のコストを削減し、クラスの再利用性を高めることができます
+        </p>
+
+
+      </div>
+    </article>
+    <a href="../designPattern.html" class="top">▲一覧へ</a>
+  </section>
+
+  <div id="video-area">
+    <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+      <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+      <source src="../../file/Brilliant.mp4" type="video/mp4">
+      <p>動画を再生できる環境ではありません。</p>
+    </video>
+    <!--/video-area-->
+  </div>
+
+  <footer>
+    <hr>
+    <nav>
+      <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+      <span>Present by perverted gentleman TM</span>
+      <span>2024</span>
+      <a href="#">上へ</a>
+    </nav>
+  </footer>
+
+</body>
+
+</html>

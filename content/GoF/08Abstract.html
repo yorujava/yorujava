@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex" />
+    <title>YoruJavaTM</title>
+    <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+    <header id="header">
+
+        <a href="../../index.html" class="h1">
+            <h1>YoruJavaTM</h1>トップページへ
+        </a>
+    </header>
+    <section class="content">
+        <h2>Abstract Factory</h2>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+        <article class="content">
+            <div class="content">
+                <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+                <p class="content">
+                    Abstract Factory（抽象工場）は、GoF（Gang of
+                    Four）のデザインパターンの一つで、関連する一連のオブジェクトを状況に応じて適切に生成する方法を提供します。このパターンは、以下の目的で使用されます:
+                </p>
+                <p class="content">
+                    一貫性のあるオブジェクトのグループを生成すること。<br>
+                    クライアントが特定の具体的なクラスを知らなくても、関連するオブジェクトを生成できるようにすること。<br>
+                    具体的な使用ケースとして、以下のような場面でAbstract Factoryパターンを活用できます:
+                </p>
+                <p class="content">
+                    複数の関連するオブジェクトを生成する必要がある場合（例: GUIコンポーネント、データベース接続、APIクライアントなど）。<br>
+                    クライアントが具体的なクラスを知らない場合（例: プラグインシステム）。<br>
+                    以下は、JavaでAbstract Factoryパターンを実装する具体的な例とコードです
+                </p>
+                <p>
+                    <textarea class="code70" wrap="off">
+    // 抽象クラス: AbstractFactory
+    abstract class AbstractFactory {
+        abstract AbstractRefueling getAbstractRefueling();
+    }
+                        
+    // 具象クラス: ConcreteHighFactory
+    class ConcreteHighFactory extends AbstractFactory {
+        @Override
+        public AbstractRefueling getAbstractRefueling() {
+            return new ConcreteHighRefueling();
+        }
+    }
+                        
+    // 具象クラス: ConcreteRegularFactory
+    class ConcreteRegularFactory extends AbstractFactory {
+        @Override
+        public AbstractRefueling getAbstractRefueling() {
+            return new ConcreteRegularRefueling();
+        }
+    }
+                        
+    // 抽象クラス: AbstractRefueling
+    abstract class AbstractRefueling {
+        abstract void payment();
+        abstract void refueling();
+    }
+                        
+    // 具象クラス: ConcreteHighRefueling
+    class ConcreteHighRefueling extends AbstractRefueling {
+        @Override
+        public void payment() {
+            System.out.println("High-octane payment");
+        }
+                        
+        @Override
+        public void refueling() {
+            System.out.println("High-octane refueling");
+        }
+    }
+                        
+    // 具象クラス: ConcreteRegularRefueling
+    class ConcreteRegularRefueling extends AbstractRefueling {
+        @Override
+        public void payment() {
+            System.out.println("Regular payment");
+        }
+                        
+        @Override
+    public void refueling() {
+            System.out.println("Regular refueling");
+        }
+    }
+                        
+    // Mainクラスでの使用例
+    public class Main {
+        public static void main(String[] args) {
+            AbstractFactory factory = new ConcreteHighFactory();
+            AbstractRefueling refueling = factory.getAbstractRefueling();
+            refueling.payment();
+            refueling.refueling();
+        }
+    }
+    </textarea>
+                </p>
+                <p class="content">
+                    この例では、Abstract Factoryパターンを使用して、ガソリンスタンドでハイオクとレギュラーを給油するケースを表現しています。Abstract
+                    Factoryパターンを活用することで、クライアントが具体的なクラスを知らなくても、関連するオブジェクトを一貫して生成できます
+                </p>
+
+
+            </div>
+        </article>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+    </section>
+
+    <div id="video-area">
+        <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+            <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+            <source src="../../file/Brilliant.mp4" type="video/mp4">
+            <p>動画を再生できる環境ではありません。</p>
+        </video>
+        <!--/video-area-->
+    </div>
+
+    <footer>
+        <hr>
+        <nav>
+            <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+            <span>Present by perverted gentleman TM</span>
+            <span>2024</span>
+            <a href="#">上へ</a>
+        </nav>
+    </footer>
+
+</body>
+
+</html>

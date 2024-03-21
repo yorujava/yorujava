@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex" />
+    <title>YoruJavaTM</title>
+    <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+    <header id="header">
+
+        <a href="../../index.html" class="h1">
+            <h1>YoruJavaTM</h1>トップページへ
+        </a>
+    </header>
+    <section class="content">
+        <!--◆◆◆◆◆◆◆◆デザインパターン名◆◆◆◆◆◆◆◆◆-->
+        <h2>Facade</h2>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+        <article class="content">
+            <div class="content">
+                <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆前説明◆◆◆◆◆◆◆◆◆-->
+                    Facadeパターンは、GoFによって定義されたデザインパターンの1つで、複数のクラスを統一的なインターフェースでラップし、クライアントに対してシンプルな窓口を提供するパターンです。
+                </p><p class="content">
+                    概要<br>
+                    Facadeパターンは、複雑なサブシステムを単純なインターフェースで包み、クライアントがシンプルに利用できるようにします。
+                    クライアントはFacadeを介してサブシステムの機能を呼び出します。
+                    サブシステム内部の詳細はFacadeに隠蔽され、クライアントはFacadeのメソッドを呼ぶだけで済みます。<br>
+                    具体例<br>
+                    以下は、Facadeパターンを用いた具体的なJavaの例です。
+                </p>
+                <p>
+                    <!--◆◆◆◆◆◆◆◆コード◆◆◆◆◆◆◆◆◆-->
+                    <textarea class="code60" wrap="off">
+//実装クラス: ListFacade
+//Java
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Properties;
+
+public class ListFacade {
+    private ListFacade() {
+        // newでインスタンス生成させないためにprivate宣言
+    }
+
+    public static void makeMemberList(String inputFileName, String outputFileName) {
+        try {
+            Properties memberProperties = MemberList.getProperties(inputFileName);
+            outputFileName = "C:\\work\\Facade\\src\\" + outputFileName + ".txt";
+            TxtWriter writer = new TxtWriter(new FileWriter(outputFileName));
+            Map<String, String> propertiesMap = writer.toMap(memberProperties);
+            writer.writeHeader();
+            writer.writeContents(propertiesMap);
+            writer.writeFooter();
+            writer.close();
+            System.out.println(String.format("ファイルを出力しました。ファイル名:%s", outputFileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+//ListFacadeクラスはFacadeとしての役割を果たします。クライアントはこのクラスを介して処理を行います。
+//makeMemberListメソッドはサブシステムの一連の処理をまとめています。
+//サブシステムクラス: MemberList
+//Java
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+public class MemberList {
+    private MemberList() {
+        // newでインスタンス生成させないためにprivate宣言
+    }
+
+    public static Properties getProperties(String fileName) {
+        fileName = "C:\\work\\Facade\\src\\" + fileName + ".txt";
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream(fileName));
+        } catch (IOException e) {
+            System.out.println(String.format("ファイルの読み込みに失敗しました。ファイル名:%s", fileName));
+        }
+        return properties;
+    }
+}
+    </textarea>
+                </p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆締め◆◆◆◆◆◆◆◆◆-->
+                    この例では、Facadeパターンを使ってクライアントが複雑な処理の制御を把握する必要なく、シンプルに処理を行えるようにしています。
+
+                </p>
+            </div>
+        </article>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+    </section>
+
+    <div id="video-area">
+        <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+            <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+            <source src="../../file/Brilliant.mp4" type="video/mp4">
+            <p>動画を再生できる環境ではありません。</p>
+        </video>
+        <!--/video-area-->
+    </div>
+
+    <footer>
+        <hr>
+        <nav>
+            <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+            <span>Present by perverted gentleman TM</span>
+            <span>2024</span>
+            <a href="#">上へ</a>
+        </nav>
+    </footer>
+
+</body>
+
+</html>

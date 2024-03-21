@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex" />
+    <title>YoruJavaTM</title>
+    <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+    <header id="header">
+
+        <a href="../../index.html" class="h1">
+            <h1>YoruJavaTM</h1>トップページへ
+        </a>
+    </header>
+    <section class="content">
+        <!--◆◆◆◆◆◆◆◆デザインパターン名◆◆◆◆◆◆◆◆◆-->
+        <h2>Interpreter</h2>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+        <article class="content">
+            <div class="content">
+                <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆前説明◆◆◆◆◆◆◆◆◆-->
+                    Interpreterパターンは、GoF（Gang of Four）によって定義されたデザインパターンの一つで、実装言語とは異なる何らかのフォーマットで記載された命令を解析して、言語の文法をオブジェクトで表現するパターンです。
+                </p><p class="content">
+                    概要<br>
+                    Interpreterパターンは、プログラムを外部から動的に制御可能な仕組みの実現や、特定ドメインで問題を高効率で解決するために使用されます。<br>
+                    主な目的は、以下の二つです:<br>
+                    プログラムを外部から動的に制御可能な仕組みの実現: 特定の言語や表現を解釈し、それに基づいた動作や処理を行うためのパターンです。例えば、独自言語の実行や、特定フォーマットのファイルの解析などが該当します。<br>
+                    特定ドメインで問題を高効率で解決するため: 例えば、SQLクエリの解析や、数式の評価、独自言語の実行などがあります。<br>
+                    具体例<br>
+                    以下は、Javaでの具体的なInterpreterパターンの例とコードです。
+                </p><p class="content">
+                    例題: 四則演算の解析<br>
+                    考えてみましょう。XMLで記述された四則演算を解析して実行するInterpreterパターンの例です。
+                </p>
+                <p>
+                    <!--◆◆◆◆◆◆◆◆コード◆◆◆◆◆◆◆◆◆-->
+                    <textarea class="code70"wrap="off">
+//XMLで記述された四則演算
+//XML
+
+<?xml version="1.0"?>
+<Addition>
+    <Subtraction>
+        <Constant Value="3" />
+        <Constant Value="1" />
+    </Subtraction>
+    <Multiplication>
+        <Division>
+            <Constant Value="6" />
+            <Constant Value="2" />
+        </Division>
+        <Constant Value="5" />
+    </Multiplication>
+</Addition>
+
+//このXMLは次の計算を表します: [ (3 - 1) + \left( \frac{6}{2} \right) ]
+
+//サンプルクラス
+//Java
+
+import org.w3c.dom.*;
+
+public interface Expression {
+    boolean interpret(String context);
+}
+
+public class Constant implements Expression {
+    private int value;
+
+    public Constant(int value) {
+        this.value = value;
+    }
+
+    @Override
+    public boolean interpret(String context) {
+        return context.contains(Integer.toString(value));
+    }
+}
+
+// 他のExpressionクラス（Addition, Subtraction, Multiplication, Division）も同様に実装
+
+public class Context {
+    private String fileName;
+
+    public Context(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public Expression buildExpression() {
+        // XMLの解析とExpressionの構築
+        // ...
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Context context = new Context("expressions.xml");
+        Expression expression = context.buildExpression();
+        System.out.println("Result: " + expression.interpret("")); // 17
+    }
+}    </textarea>
+                </p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆締め◆◆◆◆◆◆◆◆◆-->
+                    この例では、XMLから四則演算の式を解析してオブジェクトを構築し、最終的に計算結果を出力しています。
+                
+                </p>
+            </div>
+        </article>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+    </section>
+
+    <div id="video-area">
+        <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+            <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+            <source src="../../file/Brilliant.mp4" type="video/mp4">
+            <p>動画を再生できる環境ではありません。</p>
+        </video>
+        <!--/video-area-->
+    </div>
+
+    <footer>
+        <hr>
+        <nav>
+            <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+            <span>Present by perverted gentleman TM</span>
+            <span>2024</span>
+            <a href="#">上へ</a>
+        </nav>
+    </footer>
+
+</body>
+
+</html>

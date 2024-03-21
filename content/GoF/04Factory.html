@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex" />
+    <title>YoruJavaTM</title>
+    <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+    <header id="header">
+
+        <a href="../../index.html" class="h1">
+            <h1>YoruJavaTM</h1>トップページへ
+        </a>
+    </header>
+    <section class="content">
+        <h2>Factory Method</h2>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+        <article class="content">
+            <div class="content">
+                <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+                <p class="content">
+                    Factory Method（ファクトリメソッド）は、GoF（Gang of
+                    Four）のデザインパターンの一つで、オブジェクトの生成をサブクラスに委譲することで、柔軟性と疎結合性を高める設計パターンです
+                </p>
+                <p class="content">
+                    このパターンの概要は以下の通りです:
+                </p>
+                <p class="content">
+                    インスタンスの作成方法をスーパークラスで定義し、具体的な処理をサブクラスで行います。
+                    オブジェクトの生成と具体的な処理を分離することで、柔軟にオブジェクトを利用できます。
+                    Template Methodパターンをオブジェクト生成の場面に適応させたものと言えます。
+                    Factory MethodパターンとFactoryパターンの違いは次の通りです:
+                </p>
+                <p class="content">
+                    Factoryパターンでは、Factoryクラスがオブジェクトの生成処理に加えて、生成するオブジェクトの種類の変更をファクトリの処理の中で動的に行います。
+                    Factory Methodパターンでは、生成するオブジェクトごとにファクトリを用意することで、オブジェクトの生成処理を柔軟に行えます。
+                    以下に、JavaでFactory Methodパターンを実装する具体的な例とコードを示します。
+                </p>
+                <p class="content">
+                    まず、指定した名前のアカウントを生成する簡単な例を考えてみましょう
+                </p>
+                <p>
+                    <textarea class="code70" wrap="off">
+// 抽象クラス: Product
+public abstract class Product {
+    public abstract void use();
+}
+
+// Factoryクラス
+public abstract class Factory {
+    public final Product create(String owner) {
+        Product product = createProduct(owner);
+        registerProduct(product);
+        return product;
+    }
+
+    protected abstract Product createProduct(String owner);
+    protected abstract void registerProduct(Product product);
+}
+
+// 具象クラス: AccountFactory
+public class AccountFactory extends Factory {
+    private List<String> owners = new ArrayList<>();
+
+    protected Product createProduct(String owner) {
+        return new Account(owner);
+    }
+
+    protected void registerProduct(Product product) {
+        owners.add(((Account) product).getOwner());
+    }
+
+    public List<String> getOwners() {
+        return owners;
+    }
+}
+
+// 具象クラス: Account
+public class Account extends Product {
+    private String owner;
+
+    Account(String owner) {
+        System.out.println("Create account: " + owner);
+        this.owner = owner;
+    }
+
+    public void use() {
+        System.out.println("Use account: " + owner);
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+}
+
+// Mainクラスでの使用例
+public class Main {
+    public static void main(String[] args) {
+        Factory factory = new AccountFactory();
+        Product account1 = factory.create("Ralph Johnson");
+        Product account2 = factory.create("Richard Helm");
+        Product account3 = factory.create("John Vlissides");
+        Product account4 = factory.create("Erich Gamma");
+
+        account1.use();
+        account2.use();
+        account3.use();
+        account4.use();
+    }
+}
+    </textarea>
+                </p>
+                <p class="content">
+                    この例では、Factory Methodパターンを使用して、指定した名前のアカウントを生成しています。Factory
+                    Methodパターンを活用することで、オブジェクトの生成処理を柔軟に行いつつ、クラスの再利用性を高めることができます
+                </p>
+
+
+            </div>
+        </article>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+    </section>
+
+    <div id="video-area">
+        <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+            <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+            <source src="../../file/Brilliant.mp4" type="video/mp4">
+            <p>動画を再生できる環境ではありません。</p>
+        </video>
+        <!--/video-area-->
+    </div>
+
+    <footer>
+        <hr>
+        <nav>
+            <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+            <span>Present by perverted gentleman TM</span>
+            <span>2024</span>
+            <a href="#">上へ</a>
+        </nav>
+    </footer>
+
+</body>
+
+</html>

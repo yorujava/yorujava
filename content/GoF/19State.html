@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex" />
+    <title>YoruJavaTM</title>
+    <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+    <header id="header">
+
+        <a href="../../index.html" class="h1">
+            <h1>YoruJavaTM</h1>トップページへ
+        </a>
+    </header>
+    <section class="content">
+        <!--◆◆◆◆◆◆◆◆デザインパターン名◆◆◆◆◆◆◆◆◆-->
+        <h2>State</h2>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+        <article class="content">
+            <div class="content">
+                <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆前説明◆◆◆◆◆◆◆◆◆-->
+                    Stateパターンは、GoF（Gang of Four）によって定義されたデザインパターンの一つで、オブジェクトの振る舞いがその「状態」に依存し、状態が変化することで振る舞いも変わる場合に有用です。
+                </p><p class="content">
+                    以下に、Javaでの具体的なStateパターンの例とコードを示します。
+                </p><p class="content">
+                    Stateパターンの概要<br>
+                    Stateパターンでは、オブジェクトの振る舞いがその「状態」に依存し、状態が変化することで振る舞いも変わる場合に使用します。
+                    状態はStateクラスとして表現され、Contextクラスが保持し、その状態に基づく振る舞いをします。
+                    状態遷移（次にどの状態へなるか）は、各Stateオブジェクト自身が知っていることが一般的です。<br>
+                    具体例<br>
+                    考えてみましょう。エアコンで温度の状態「低」「中」「高」を管理する場合、Stateパターンを使って以下のように実装できます。
+                </p>
+                <p>
+                    <!--◆◆◆◆◆◆◆◆コード◆◆◆◆◆◆◆◆◆-->
+                    <textarea class="code130" wrap="off">
+//TemperatureStateインターフェース
+//Java
+
+interface TemperatureState {
+    void increase();
+    void decrease();
+}
+
+//HighTemperatureStateクラス
+//Java
+
+public class HighTemperatureState implements TemperatureState {
+    private final AirConditioner airConditioner;
+
+    public HighTemperatureState(AirConditioner airConditioner) {
+        this.airConditioner = airConditioner;
+    }
+
+    @Override
+    public void increase() {
+        System.out.println("これ以上温度を上げることはできません。");
+    }
+
+    @Override
+    public void decrease() {
+        System.out.println("温度を「中」に下げます。");
+        airConditioner.setState(airConditioner.getMiddleState());
+    }
+}
+
+//MiddleTemperatureStateクラス
+//Java
+
+public class MiddleTemperatureState implements TemperatureState {
+    private final AirConditioner airConditioner;
+
+    public MiddleTemperatureState(AirConditioner airConditioner) {
+        this.airConditioner = airConditioner;
+    }
+
+    @Override
+    public void increase() {
+        System.out.println("温度を「高」に上げます。");
+        airConditioner.setState(airConditioner.getHighState());
+    }
+
+    @Override
+    public void decrease() {
+        System.out.println("温度を「低」に下げます。");
+        airConditioner.setState(airConditioner.getLowState());
+    }
+}
+
+//LowTemperatureStateクラス
+//Java
+
+public class LowTemperatureState implements TemperatureState {
+    private final AirConditioner airConditioner;
+
+    public LowTemperatureState(AirConditioner airConditioner) {
+        this.airConditioner = airConditioner;
+    }
+
+    @Override
+    public void increase() {
+        System.out.println("温度を「中」に上げます。");
+        airConditioner.setState(airConditioner.getMiddleState());
+    }
+
+    @Override
+    public void decrease() {
+        System.out.println("これ以上温度を下げることはできません。");
+    }
+}
+
+//AirConditionerクラス（Context）
+//Java
+
+public class AirConditioner {
+    private TemperatureState currentState;
+
+    public AirConditioner() {
+        currentState = new MiddleTemperatureState(this);
+    }
+
+    public void setState(TemperatureState state) {
+        currentState = state;
+    }
+
+    public TemperatureState getLowState() {
+        return new LowTemperatureState(this);
+    }
+
+    public TemperatureState getMiddleState() {
+        return new MiddleTemperatureState(this);
+    }
+
+    public TemperatureState getHighState() {
+        return new HighTemperatureState(this);
+    }
+
+    public void increaseTemperature() {
+        currentState.increase();
+    }
+
+    public void decreaseTemperature() {
+        currentState.decrease();
+    }
+}
+
+//メインクラス
+//Java
+
+public class Main {
+    public static void main(String[] args) {
+        AirConditioner airConditioner = new AirConditioner();
+
+        // エアコンの温度を操作
+        airConditioner.increaseTemperature(); // 温度を「高」に上げます。
+        airConditioner.increaseTemperature(); // これ以上温度を上げることはできません。
+        airConditioner.decreaseTemperature(); // 温度を「中」に下げます。
+        airConditioner.decreaseTemperature(); // 温度を「低」に下げます。
+        airConditioner.decreaseTemperature(); // これ以上温度を下げることはできません。
+    }
+}
+    </textarea>
+                </p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆締め◆◆◆◆◆◆◆◆◆-->
+                    この例では、AirConditionerクラスが異なる温度状態を持ち、それに応じて振る舞いが変わることを示しています。Stateパターンを使うことで、オブジェクトの振る舞いを状態に依存させることができます。
+
+                </p>
+            </div>
+        </article>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+    </section>
+
+    <div id="video-area">
+        <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+            <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+            <source src="../../file/Brilliant.mp4" type="video/mp4">
+            <p>動画を再生できる環境ではありません。</p>
+        </video>
+        <!--/video-area-->
+    </div>
+
+    <footer>
+        <hr>
+        <nav>
+            <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+            <span>Present by perverted gentleman TM</span>
+            <span>2024</span>
+            <a href="#">上へ</a>
+        </nav>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex" />
+    <title>YoruJavaTM</title>
+    <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+    <header id="header">
+
+        <a href="../../index.html" class="h1">
+            <h1>YoruJavaTM</h1>トップページへ
+        </a>
+    </header>
+    <section class="content">
+        <!--◆◆◆◆◆◆◆◆デザインパターン名◆◆◆◆◆◆◆◆◆-->
+        <h2>Decorator</h2>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+        <article class="content">
+            <div class="content">
+                <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆前説明◆◆◆◆◆◆◆◆◆-->
+                    Decoratorパターンは、オブジェクトの機能を動的に追加するためのデザインパターンで、オブジェクトの振る舞いを変更せずに機能を拡張できます。以下に、Decoratorパターンの概要とJavaでの具体例を示します。
+                </p><p class="content">
+                    Decoratorパターンの概要<br>
+                    Decoratorパターンは、元となるオブジェクトに装飾（デコレート）を行い、機能を拡張するパターンです。
+                    装飾者（Decorator）は、元のオブジェクトをラップして新たな機能を追加します。
+                    元のクラスに変更を加えずに、柔軟に機能を拡張できます。<br>
+                    登場人物<br>
+                    Component: 装飾される対象の元となる抽象クラスを表します。<br>
+                    Decorator: Componentクラスを継承する抽象クラスで、装飾を行う側のクラスの元となるクラスです。Componentクラスをフィールドに持っています。<br>
+                    ConcreteComponent: Componentクラスの実装クラスです。抽象メソッドを全て実装します。<br>
+                    ConcreteDecorator: Decoratorクラスの実装クラスで、Componentクラスの持つ抽象メソッドを実装します。<br>
+                    具体例<br>
+                    以下は、Decoratorパターンを用いた具体的な例です。
+                </p>
+                <p>
+                    <!--◆◆◆◆◆◆◆◆コード◆◆◆◆◆◆◆◆◆-->
+                    <textarea class="code70" wrap="off">
+//抽象クラス: SpongeCake
+//Java
+
+public abstract class SpongeCake {
+    public abstract String getName(); // 名前を得る
+    public abstract int getPrice(); // 価格を得る
+    public void show() {
+        System.out.println(getName() + ":" + getPrice() + "円");
+    }
+}
+
+//実装クラス: ShortCakeとChocolateCake
+//Java
+
+public class ShortCake extends SpongeCake {
+    @Override
+    public String getName() {
+        return "ショートケーキ";
+    }
+
+    @Override
+    public int getPrice() {
+        return 500;
+    }
+}
+
+public class ChocolateCake extends SpongeCake {
+    @Override
+    public String getName() {
+        return "チョコレートケーキ";
+    }
+
+    @Override
+    public int getPrice() {
+        return 700;
+    }
+}
+
+//Decoratorクラス: StrawberryDecoratorとBananaDecorator
+//Java
+
+public class StrawberryDecorator extends Decorator {
+    public StrawberryDecorator(SpongeCake spongeCake) {
+        super(spongeCake);
+    }
+
+    @Override
+    public String getName() {
+        return "イチゴ" + spongeCake.getName();
+    }
+
+    @Override
+    public int getPrice() {
+        return spongeCake.getPrice() + 100;
+    }
+}
+
+public class BananaDecorator extends Decorator {
+    public BananaDecorator(SpongeCake spongeCake) {
+        super(spongeCake);
+    }
+
+    @Override
+    public String getName() {
+        return "バナナ" + spongeCake.getName();
+    }
+
+    @Override
+    public int getPrice() {
+        return spongeCake.getPrice() + 300;
+    }
+}
+    </textarea>
+                </p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆締め◆◆◆◆◆◆◆◆◆-->
+                    この例では、スポンジケーキをイチゴやバナナで装飾して、新たなケーキを作成しています。Decoratorパターンを使うことで、柔軟に機能を拡張できます。
+
+                </p>
+            </div>
+        </article>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+    </section>
+
+    <div id="video-area">
+        <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+            <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+            <source src="../../file/Brilliant.mp4" type="video/mp4">
+            <p>動画を再生できる環境ではありません。</p>
+        </video>
+        <!--/video-area-->
+    </div>
+
+    <footer>
+        <hr>
+        <nav>
+            <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+            <span>Present by perverted gentleman TM</span>
+            <span>2024</span>
+            <a href="#">上へ</a>
+        </nav>
+    </footer>
+
+</body>
+
+</html>

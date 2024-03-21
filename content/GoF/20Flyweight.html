@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex" />
+    <title>YoruJavaTM</title>
+    <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+    <header id="header">
+
+        <a href="../../index.html" class="h1">
+            <h1>YoruJavaTM</h1>トップページへ
+        </a>
+    </header>
+    <section class="content">
+        <!--◆◆◆◆◆◆◆◆デザインパターン名◆◆◆◆◆◆◆◆◆-->
+        <h2>Flyweight</h2>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+        <article class="content">
+            <div class="content">
+                <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆前説明◆◆◆◆◆◆◆◆◆-->
+                    Flyweightパターンは、GoF（Gang of Four）によって定義されたデザインパターンの一つで、同じ内容のオブジェクトを再利用して、リソースを節約する設計です。
+                </p><p class="content">
+                    概要<br>
+                    Flyweightパターンは、オブジェクトをできるだけnewせずに共有させることでメモリの消費量を抑制するパターンです。
+                    メモリの消費量が少ないことを指し、多くのオブジェクトを生成するとメモリを多く消費してしまい、処理の速度が遅くなる問題を解決します。
+                    共有して利用するクラスを表すのがFlyweightであり、共有するインスタンスを生成するための工場役となるクラスがFlyweightFactoryです。<br>
+                    具体例<br>
+                    以下は、Javaでの具体的なFlyweightパターンの例とコードです。
+                </p>
+                <p>
+                    <!--◆◆◆◆◆◆◆◆コード◆◆◆◆◆◆◆◆◆-->
+                    <textarea class="code100" wrap="off">
+//実装クラス: Stampクラス
+//Java
+
+package sample;
+
+public class Stamp {
+    private char charname;
+    private int useCount = 0;
+    private int newCount = 0;
+
+    public int getUseCount() {
+        return useCount;
+    }
+
+    public void setUseCount(int useCount) {
+        this.useCount = useCount;
+    }
+
+    public int getNewCount() {
+        return newCount;
+    }
+
+    public void setNewCount(int newCount) {
+        this.newCount = newCount;
+    }
+
+    public Stamp(char charname) {
+        this.charname = charname;
+    }
+
+    public void print() {
+        System.out.println("charname: " + this.charname);
+    }
+}
+
+//Stampクラスは共有して利用されるFlyweight役となります。
+//文字charnameを受け取って生成され、printメソッドで文字を表示します。
+//FlyweightFactoryクラス
+//Java
+
+package sample;
+
+import java.util.HashMap;
+import java.util.Map.Entry;
+
+public class StampFactory {
+    private HashMap<String, Stamp> pool = new HashMap<>();
+    private static StampFactory singleton = new StampFactory();
+
+    private StampFactory() {
+    }
+
+    public static StampFactory getInstance() {
+        return singleton;
+    }
+
+    public synchronized Stamp getStamp(char charname) {
+        Stamp bc = pool.get("" + charname);
+        if (bc == null) {
+            bc = new Stamp(charname);
+            bc.setNewCount(bc.getNewCount() + 1);
+            pool.put("" + charname, bc);
+        }
+        bc.setUseCount(bc.getUseCount() + 1);
+        return bc;
+    }
+
+    public void printAllPool() {
+        for (Entry<String, Stamp> entry : pool.entrySet()) {
+            System.out.println(entry.getKey() + " : " 
+                 + entry.getValue().getUseCount() + " : " 
+                 + entry.getValue().getNewCount());
+        }
+    }
+}
+
+//StampFactoryクラスはStampクラスを生成する工場であり、
+//生成されたインスタンスを管理するためのMapとしてpool
+//フィールドを持ちます。また、ここではSingletonパターン
+//を適用しているため、自身を表すsingletonフィールドも持っています。
+//メインクラス
+//Java
+
+public class Main {
+    public static void main(String[] args) {
+        StampFactory stampFactory = StampFactory.getInstance();
+
+        Stamp a = stampFactory.getStamp('A');
+        a.print(); // charname: A
+
+        Stamp b = stampFactory.getStamp('B');
+        b.print(); // charname: B
+
+        Stamp a2 = stampFactory.getStamp('A');
+        a2.print(); // charname: A
+
+        stampFactory.printAllPool();
+    }
+}
+    </textarea>
+                </p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆締め◆◆◆◆◆◆◆◆◆-->
+                    この例では、StampFactoryを使ってStampインスタンスを共有して利用しています。
+
+                </p>
+            </div>
+        </article>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+    </section>
+
+    <div id="video-area">
+        <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+            <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+            <source src="../../file/Brilliant.mp4" type="video/mp4">
+            <p>動画を再生できる環境ではありません。</p>
+        </video>
+        <!--/video-area-->
+    </div>
+
+    <footer>
+        <hr>
+        <nav>
+            <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+            <span>Present by perverted gentleman TM</span>
+            <span>2024</span>
+            <a href="#">上へ</a>
+        </nav>
+    </footer>
+
+</body>
+
+</html>

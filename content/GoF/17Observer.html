@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex" />
+    <title>YoruJavaTM</title>
+    <link rel="stylesheet" href="../../YoruJava.css">
+</head>
+
+<body>
+    <header id="header">
+
+        <a href="../../index.html" class="h1">
+            <h1>YoruJavaTM</h1>トップページへ
+        </a>
+    </header>
+    <section class="content">
+        <!--◆◆◆◆◆◆◆◆デザインパターン名◆◆◆◆◆◆◆◆◆-->
+        <h2>Observer</h2>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+        <article class="content">
+            <div class="content">
+                <p class="notes">※AI生成文章を利用しており正しくない可能性があります。</p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆前説明◆◆◆◆◆◆◆◆◆-->
+                    Observerパターンは、オブジェクトの状態変化を監視し、それに応じて依存するオブジェクトに通知するデザインパターンです。具体的な例として、数生成と観察者の関係を考えてみましょう。
+                </p><p class="content">
+                    Observerパターンは、以下の役割で構成されます：
+                </p><p class="content">
+                    Subject（被験者）:
+                    状態を持つオブジェクトで、観察される側です。
+                    状態が変化した際に、登録された観察者に通知します。<br>
+                    Observer（観察者）
+                    状態の変化を監視するオブジェクトです。
+                    Subjectからの通知を受け取り、適切な処理を実行します。<br>
+                    ConcreteSubject（具体的な被験者）:
+                    Subjectの具体的な実装です。
+                    状態を保持し、Observerに通知を送信します。<br>
+                    ConcreteObserver（具体的な観察者）:
+                    Observerの具体的な実装です。
+                    Subjectからの通知を受け取り、適切な処理を実行します。
+                    以下に、JavaでObserverパターンを実装したシンプルなコード例を示します
+                </p>
+                <p>
+                    <!--◆◆◆◆◆◆◆◆コード◆◆◆◆◆◆◆◆◆-->
+                    <textarea class="code" wrap="off">
+import java.util.ArrayList;
+import java.util.List;
+
+// Subject（被験者）の抽象クラス
+abstract class NumberGenerator {
+    private List<Observer> observers = new ArrayList<>();
+
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    public void notifyObservers(int number) {
+        for (Observer observer : observers) {
+            observer.update(number);
+        }
+    }
+
+    public abstract int getNumber();
+    public abstract void execute();
+}
+
+// Observer（観察者）のインターフェース
+interface Observer {
+    void update(int number);
+}
+
+// 具体的な被験者クラス
+class RandomNumberGenerator extends NumberGenerator {
+    private int number;
+
+    @Override
+    public int getNumber() {
+        return number;
+    }
+
+    @Override
+    public void execute() {
+        // ランダムな数を生成
+        number = (int) (Math.random() * 100);
+        notifyObservers(number);
+    }
+}
+
+// 具体的な観察者クラス
+class DigitObserver implements Observer {
+    @Override
+    public void update(int number) {
+        System.out.println("DigitObserver: " + number);
+    }
+}
+
+class GraphObserver implements Observer {
+    @Override
+    public void update(int number) {
+        System.out.print("GraphObserver: ");
+        for (int i = 0; i < number; i++) {
+            System.out.print("*");
+        }
+        System.out.println();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        NumberGenerator generator = new RandomNumberGenerator();
+        Observer digitObserver = new DigitObserver();
+        Observer graphObserver = new GraphObserver();
+
+        generator.addObserver(digitObserver);
+        generator.addObserver(graphObserver);
+
+        generator.execute();
+    }
+}
+    </textarea>
+                </p>
+                <p class="content"><!--◆◆◆◆◆◆◆◆締め◆◆◆◆◆◆◆◆◆-->
+                    この例では、RandomNumberGeneratorが数を生成し、DigitObserverとGraphObserverがその数を観察しています。数が変化するたびに、観察者は適切な処理を実行します。Observerパターンは、MVCアーキテクチャなどで広く使用され、柔軟なソフトウェア設計に貢献します
+
+                </p>
+            </div>
+        </article>
+        <a href="../designPattern.html" class="top">▲一覧へ</a>
+    </section>
+
+    <div id="video-area">
+        <video id="video" poster="../../file/Brilliant.jpg" webkit-playsinline playsinline muted autoplay loop>
+            <!--
+            poster：動画ファイルが利用できない環境で代替表示される画像
+            webkit-playsinline：iOS 9までのSafari用インライン再生指定
+            playsinline：iOS 10以降のSafari用インライン再生指定
+            muted：音声をミュートさせる
+            autoplay：動画を自動再生させる
+            loop：動画をループさせる
+            controls：コントロールバーを表示する
+            -->
+            <source src="../../file/Brilliant.mp4" type="video/mp4">
+            <p>動画を再生できる環境ではありません。</p>
+        </video>
+        <!--/video-area-->
+    </div>
+
+    <footer>
+        <hr>
+        <nav>
+            <a href="../../index.html" class="h1">YoruJavaTM</a><br>
+            <span>Present by perverted gentleman TM</span>
+            <span>2024</span>
+            <a href="#">上へ</a>
+        </nav>
+    </footer>
+
+</body>
+
+</html>
